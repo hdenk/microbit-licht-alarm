@@ -2,12 +2,28 @@ input.onButtonPressed(Button.A, function () {
     if (lautstaerke >= 0) {
         lautstaerke = lautstaerke - 1
         music.setVolume(lautstaerke)
+        basic.showLeds(`
+            . . . . .
+            . . . . .
+            . # # # .
+            . . . . .
+            . . . . .
+            `)
+        basic.pause(200)
     }
 })
 input.onButtonPressed(Button.B, function () {
     if (lautstaerke <= 255) {
         lautstaerke = lautstaerke + 1
         music.setVolume(lautstaerke)
+        basic.showLeds(`
+            . . . . .
+            . . # . .
+            . # # # .
+            . . # . .
+            . . . . .
+            `)
+        basic.pause(200)
     }
 })
 function unerlaubteFrequenz (freq: number) {
@@ -32,6 +48,8 @@ basic.forever(function () {
         }
         music.playTone(alarmTonFrequenz, music.beat(BeatFraction.Eighth))
         alarmTonFrequenz = alarmTonFrequenz + freqDelta
+    } else {
+        basic.showIcon(IconNames.Skull)
     }
     basic.pause(1)
 })

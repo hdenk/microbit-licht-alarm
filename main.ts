@@ -1,18 +1,18 @@
 music.setVolume(60)
-let MIN_TON_IN_HZ = 262
-let MAX_TON_IN_HZ = 523
-let ANZAHL_SCHRITTE = 32
-let DELTA_IN_HZ = (MAX_TON_IN_HZ - MIN_TON_IN_HZ) / ANZAHL_SCHRITTE
-let tonInHz = MIN_TON_IN_HZ
+let ALARM_SCHWELLE_LICHT = 100
+let MIN_TON_FREQ = 262
+let MAX_TON_FREQ = 523
+let TON_SCHRITTE = 32
+let freqDelta = (MAX_TON_FREQ - MIN_TON_FREQ) / TON_SCHRITTE
+let tonFreq = MIN_TON_FREQ
 basic.forever(function () {
-    let ALARMING_LIGHT_LEVEL = 0
-    if (input.lightLevel() > ALARMING_LIGHT_LEVEL) {
-        if (Math.round(tonInHz) < MAX_TON_IN_HZ) {
-            tonInHz += DELTA_IN_HZ
-            music.playTone(Math.round(tonInHz), music.beat(BeatFraction.Quarter))
+    if (input.lightLevel() > ALARM_SCHWELLE_LICHT) {
+        if (Math.round(tonFreq) < MAX_TON_FREQ) {
+            tonFreq += freqDelta
+            music.playTone(Math.round(tonFreq), music.beat(BeatFraction.Half))
             music.rest(music.beat(BeatFraction.Sixteenth))
         } else {
-            tonInHz = MIN_TON_IN_HZ
+            tonFreq = MIN_TON_FREQ
         }
     }
 })
